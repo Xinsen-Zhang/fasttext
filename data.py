@@ -1,4 +1,4 @@
-# import codecs
+import codecs
 import pandas as pd
 import string
 # from keras.preprocessing import text, sequence
@@ -12,7 +12,7 @@ test = pd.read_csv('./data/test.tsv', sep='\t')
 
 # define apply function to clean the data
 def process_text(phrase):
-    # phrase = phrase.lower()
+    phrase = phrase.lower()
     punctuation = string.punctuation
     for punc in punctuation:
         phrase = phrase.replace(punc, ' {} '.format(punc))
@@ -24,9 +24,9 @@ x_test = test['Phrase'].apply(process_text)
 y_train = train['Sentiment']
 
 # extrct the corpus and save it to the disk
+corpus = '\n'.join(list(x_train)+list(x_test))
+f = codecs.open('./data/corpus.txt', 'w')
+f.write(corpus)
+f.close()
 # tokenizer = text.Tokenizer()
 # tokenizer.fit_on_texts(list(x_train) + list(x_test))
-# corpus = '\n'.join(list(x_train)+list(x_test))
-# f = codecs.open('./data/corpus.txt', 'w')
-# f.write(corpus)
-# f.close()
